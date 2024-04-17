@@ -20,15 +20,18 @@ class _LabelScreenState extends State<LabelScreen> {
             context,
             index,
           ) {
-            if (index.isOdd) {
-              return const Divider();
-            }
+            // if (index.isOdd) {
+            //   return const Divider();
+            // }
 
-            return LabelCard(
-              label: LabelModel(title: 'label $index'),
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: LabelCard(
+                label: LabelModel(title: 'label $index'),
+              ),
             );
           },
-          itemCount: 50,
+          itemCount: 5,
         ),
         Positioned(
             bottom: 16.0,
