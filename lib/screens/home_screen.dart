@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_list/screens/bookmark_screen.dart';
+import 'package:tasks_list/screens/label_screen.dart';
 import 'package:tasks_list/screens/archive_screen.dart';
 import 'package:tasks_list/screens/note_screen.dart';
 import 'package:tasks_list/screens/trash_screen.dart';
@@ -26,13 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
     //   'title': 'Stick notes'
     // },
     {
-      'destination': const BookmarkScreen(),
+      'destination': const LabelScreen(),
       'icon': Icons.edit_outlined,
-      'title': 'Edit bookmarks'
+      'title': 'Edit labels'
     },
     {
       'destination': const ArchiveScreen(),
-      'icon': Icons.file_download,
+      'icon': Icons.archive_outlined,
       'title': 'Archive'
     },
     {

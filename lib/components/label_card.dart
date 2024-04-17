@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_list/model/bookmark_model.dart';
+import 'package:tasks_list/model/label_model.dart';
 
-class BookmarkCard extends StatefulWidget {
-  final BookmarkModel bookmark;
-  const BookmarkCard({super.key, required this.bookmark});
+class LabelCard extends StatefulWidget {
+  final LabelModel label;
+  const LabelCard({super.key, required this.label});
 
   @override
-  State<BookmarkCard> createState() => _BookmarkCardState();
+  State<LabelCard> createState() => _LabelCardState();
 }
 
-class _BookmarkCardState extends State<BookmarkCard> {
+class _LabelCardState extends State<LabelCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +18,7 @@ class _BookmarkCardState extends State<BookmarkCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.bookmark.title,
+              widget.label.title,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(

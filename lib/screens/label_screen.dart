@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_list/components/bookmark_card.dart';
-import 'package:tasks_list/model/bookmark_model.dart';
+import 'package:tasks_list/components/label_card.dart';
+import 'package:tasks_list/model/label_model.dart';
 
-class BookmarkScreen extends StatefulWidget {
-  const BookmarkScreen({super.key});
+class LabelScreen extends StatefulWidget {
+  const LabelScreen({super.key});
 
   @override
-  createState() => _BookmarkScreenState();
+  createState() => _LabelScreenState();
 }
 
-class _BookmarkScreenState extends State<BookmarkScreen> {
+class _LabelScreenState extends State<LabelScreen> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -24,8 +24,8 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
               return const Divider();
             }
 
-            return BookmarkCard(
-              bookmark: BookmarkModel(title: 'bookmark $index'),
+            return LabelCard(
+              label: LabelModel(title: 'label $index'),
             );
           },
           itemCount: 50,

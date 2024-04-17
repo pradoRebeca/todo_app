@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_list/components/note_card.dart';
-import 'package:tasks_list/model/bookmark_model.dart';
+import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/model/note_model.dart';
 
 class TrashScreen extends StatefulWidget {
@@ -20,8 +20,8 @@ class _TrashScreenState extends State<TrashScreen> {
             content: 'testeeeeeeeee',
             color: Colors.blue,
             deleted: true,
-            bookmarks: [
-              BookmarkModel(title: 'text'),
+            labels: [
+              LabelModel(title: 'text'),
             ]),
       ),
       itemCount: 3,

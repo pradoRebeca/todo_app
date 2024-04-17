@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_list/components/note_card.dart';
-import 'package:tasks_list/model/bookmark_model.dart';
+import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/model/note_model.dart';
 
 class ArchiveScreen extends StatelessWidget {
@@ -14,10 +14,10 @@ class ArchiveScreen extends StatelessWidget {
             title: 'teste',
             content: 'testeeeeeeeee',
             color: Colors.green,
-            bookmarks: [
-              BookmarkModel(title: 'text'),
-              BookmarkModel(title: 'text'),
-              BookmarkModel(title: 'text'),
+            labels: [
+              LabelModel(title: 'text'),
+              LabelModel(title: 'text'),
+              LabelModel(title: 'text'),
             ]),
       ),
       itemCount: 3,

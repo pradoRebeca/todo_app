@@ -35,15 +35,14 @@ class _NoteCardState extends State<NoteCard> {
                 ),
               ),
             Text(widget.note.content),
-            if (widget.note.bookmarks != null &&
-                widget.note.bookmarks!.isNotEmpty)
+            if (widget.note.labels != null && widget.note.labels!.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Wrap(
                   spacing: 5.0,
                   children: [
-                    ...widget.note.bookmarks!.map((bookmark) => InputChip(
-                          label: Text(bookmark.title),
+                    ...widget.note.labels!.map((label) => InputChip(
+                          label: Text(label.title),
                           backgroundColor: Colors.blue,
                         ))
                   ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_list/model/bookmark_model.dart';
+import 'package:tasks_list/model/label_model.dart';
 
 class NoteModel {
   String? title;
@@ -8,12 +8,12 @@ class NoteModel {
   DateTime? createdAt;
   DateTime? updateAt;
   bool deleted;
-  List<BookmarkModel>? bookmarks;
+  List<LabelModel>? labels;
 
   NoteModel(
       {this.title,
       required this.content,
       this.color,
-      this.bookmarks,
+      this.labels,
       this.deleted = true});
 }
