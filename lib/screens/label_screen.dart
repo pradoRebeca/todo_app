@@ -20,10 +20,6 @@ class _LabelScreenState extends State<LabelScreen> {
             context,
             index,
           ) {
-            // if (index.isOdd) {
-            //   return const Divider();
-            // }
-
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: LabelCard(

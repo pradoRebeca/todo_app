@@ -19,14 +19,14 @@ class _NoteScreenState extends State<NoteScreen> {
         itemBuilder: (context, index) => NoteCard(
           note: NoteModel(
               title: 'teste',
-              content: 'testeeeeeeeee',
-              color: Colors.red,
+              content: 'teste',
+              color: index.isOdd ? Colors.red[200] : null,
               labels: [
                 LabelModel(title: 'text'),
                 LabelModel(title: 'text'),
               ]),
         ),
-        itemCount: 20,
+        itemCount: 6,
       ),
       Positioned(
           bottom: 16.0,

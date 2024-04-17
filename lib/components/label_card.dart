@@ -82,7 +82,5 @@ class _LabelCardState extends State<LabelCard> {
 
   void saveLabel() {
     editingSetState();
-
-    //TODO: ImplementsSaveMethod
   }
 }

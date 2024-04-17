@@ -20,11 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
       'icon': Icons.lightbulb_outline,
       'title': 'Notes'
     },
-    // {
-    //   'destination': FileScreen(),
-    //   'icon': Icons.notifications_outlined,
-    //   'title': 'Stick notes'
-    // },
     {
       'destination': const LabelScreen(),
       'icon': Icons.edit_outlined,
@@ -51,12 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: NavigationDrawer(
         selectedIndex: currentScreenIndex,
         onDestinationSelected: handleScreenChanged,
-        children: [
-          ...screens.map(
-            (item) => NavigationDrawerDestination(
-                icon: Icon(item['icon']), label: Text(item['title'])),
-          )
-        ],
+        children: screens
+            .map(
+              (item) => NavigationDrawerDestination(
+                  icon: Icon(item['icon']), label: Text(item['title'])),
+            )
+            .toList(),
       ),
       body: screens[currentScreenIndex]['destination'],
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tasks_list/components/color_picker_card.dart';
+import 'package:tasks_list/components/list_label_card.dart';
 
 class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key});
@@ -19,6 +21,8 @@ class _EditNoteScreen extends State<EditNoteScreen> {
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
+          systemOverlayStyle:
+              const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
           backgroundColor: Colors.transparent,
           actions: [
             IconButton(
@@ -70,11 +74,26 @@ class _EditNoteScreen extends State<EditNoteScreen> {
               Positioned(
                   bottom: 16,
                   right: 0,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      showColors(context);
-                    },
-                    child: const Icon(Icons.palette),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            showListLabelCard(context);
+                            // showColors(context);
+                          },
+                          child: const Icon(Icons.label),
+                        ),
+                      ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          showColors(context);
+                        },
+                        child: const Icon(Icons.palette),
+                      )
+                    ],
                   ))
             ],
           ),
@@ -94,6 +113,17 @@ class _EditNoteScreen extends State<EditNoteScreen> {
           });
           // Handle main color changes
         }),
+      ),
+    );
+  }
+
+  void showListLabelCard(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const AlertDialog(
+        scrollable: true,
+        title: Text("Select labels"),
+        content: ListLabelCard(),
       ),
     );
   }
