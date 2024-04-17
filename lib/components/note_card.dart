@@ -41,10 +41,14 @@ class _NoteCardState extends State<NoteCard> {
                 child: Wrap(
                   spacing: 5.0,
                   children: [
-                    ...widget.note.labels!.map((label) => InputChip(
-                          label: Text(label.title),
-                          backgroundColor: Colors.blue,
-                        ))
+                    ...widget.note.labels!.map((label) => Chip(
+                        label: Text(label.title),
+                        backgroundColor: widget.note.color ??
+                            Theme.of(context).colorScheme.surfaceContainerHigh,
+                        side: widget.note.color != null
+                            ? BorderSide(
+                                color: Theme.of(context).colorScheme.outline)
+                            : BorderSide.none))
                   ],
                 ),
               ),

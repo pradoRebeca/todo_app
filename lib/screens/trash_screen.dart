@@ -18,7 +18,8 @@ class _TrashScreenState extends State<TrashScreen> {
         note: NoteModel(
             title: 'teste',
             content: 'testeeeeeeeee',
-            color: Colors.blue,
+            // color: index.isOdd ? Colors.blue[100] : null,;
+            color: index.isOdd ? const Color.fromARGB(255, 11, 61, 104) : null,
             deleted: true,
             labels: [
               LabelModel(title: 'text'),
