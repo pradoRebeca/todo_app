@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_list/model/bookmark_model.dart';
 
-class GradeModel {
+class NoteModel {
   String? title;
   String content;
   Color? color;
@@ -10,7 +10,7 @@ class GradeModel {
   bool deleted;
   List<BookmarkModel>? bookmarks;
 
-  GradeModel(
+  NoteModel(
       {this.title,
       required this.content,
       this.color,

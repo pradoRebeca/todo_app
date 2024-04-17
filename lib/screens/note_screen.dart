@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_list/components/grade_card.dart';
-import 'package:tasks_list/components/grade_form_card.dart';
+import 'package:tasks_list/components/note_card.dart';
 import 'package:tasks_list/model/bookmark_model.dart';
-import 'package:tasks_list/model/grade_model.dart';
+import 'package:tasks_list/model/note_model.dart';
+import 'package:tasks_list/screens/edit_note_screen.dart';
 
-class GradeScreen extends StatefulWidget {
-  const GradeScreen({super.key});
+class NoteScreen extends StatefulWidget {
+  const NoteScreen({super.key});
 
   @override
-  createState() => _GradeScreenState();
+  createState() => _NoteScreenState();
 }
 
-class _GradeScreenState extends State<GradeScreen> {
+class _NoteScreenState extends State<NoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
       ListView.builder(
-        itemBuilder: (context, index) => GradeCard(
-          grade: GradeModel(
+        itemBuilder: (context, index) => NoteCard(
+          note: NoteModel(
               title: 'teste',
               content: 'testeeeeeeeee',
               color: Colors.red,
@@ -34,21 +34,11 @@ class _GradeScreenState extends State<GradeScreen> {
           right: 16.0,
           child: FloatingActionButton(
             onPressed: () {
-              showGradeForm(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const EditNoteScreen()));
             },
             child: const Icon(Icons.add),
           ))
     ]);
   }
-
-  // void _showModalBottomSheet(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         content: GradeFormCard(),
-  //       );
-  //     },
-  //   );
-  // }
 }

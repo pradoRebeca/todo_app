@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_list/model/grade_model.dart';
+import 'package:tasks_list/model/note_model.dart';
 
-class GradeCard extends StatefulWidget {
-  final GradeModel grade;
-  const GradeCard({super.key, required this.grade});
+class NoteCard extends StatefulWidget {
+  final NoteModel note;
+  const NoteCard({super.key, required this.note});
 
   @override
-  createState() => _GradeCardState();
+  createState() => _NoteCardState();
 }
 
-class _GradeCardState extends State<GradeCard> {
+class _NoteCardState extends State<NoteCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,38 +18,38 @@ class _GradeCardState extends State<GradeCard> {
         constraints: const BoxConstraints(minHeight: 100),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-            color: widget.grade.color ?? Theme.of(context).colorScheme.surface,
-            border: widget.grade.color == null
+            color: widget.note.color ?? Theme.of(context).colorScheme.surface,
+            border: widget.note.color == null
                 ? Border.all(color: Theme.of(context).colorScheme.outline)
                 : null,
             borderRadius: BorderRadius.circular(15)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.grade.title != null)
+            if (widget.note.title != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
-                  widget.grade.title!,
+                  widget.note.title!,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-            Text(widget.grade.content),
-            if (widget.grade.bookmarks != null &&
-                widget.grade.bookmarks!.isNotEmpty)
+            Text(widget.note.content),
+            if (widget.note.bookmarks != null &&
+                widget.note.bookmarks!.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Wrap(
                   spacing: 5.0,
                   children: [
-                    ...widget.grade.bookmarks!.map((bookmark) => InputChip(
+                    ...widget.note.bookmarks!.map((bookmark) => InputChip(
                           label: Text(bookmark.title),
                           backgroundColor: Colors.blue,
                         ))
                   ],
                 ),
               ),
-            if (widget.grade.deleted)
+            if (widget.note.deleted)
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

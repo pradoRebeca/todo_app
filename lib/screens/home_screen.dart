@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_list/screens/bookmark_screen.dart';
 import 'package:tasks_list/screens/archive_screen.dart';
-import 'package:tasks_list/screens/grade_screen.dart';
+import 'package:tasks_list/screens/note_screen.dart';
 import 'package:tasks_list/screens/trash_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,9 +16,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Map<String, dynamic>> screens = [
     {
-      'destination': const GradeScreen(),
+      'destination': const NoteScreen(),
       'icon': Icons.lightbulb_outline,
-      'title': 'Grades'
+      'title': 'Notes'
     },
     // {
     //   'destination': FileScreen(),
