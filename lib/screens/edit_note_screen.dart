@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_list/components/color_picker_card.dart';
 
 class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key});
@@ -11,10 +12,14 @@ class _EditNoteScreen extends State<EditNoteScreen> {
   TextEditingController title = TextEditingController();
   TextEditingController content = TextEditingController();
 
+  Color? backgroundColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: backgroundColor,
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
           actions: [
             IconButton(
               onPressed: () {},
@@ -66,11 +71,30 @@ class _EditNoteScreen extends State<EditNoteScreen> {
                   bottom: 16,
                   right: 0,
                   child: FloatingActionButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showColors(context);
+                    },
                     child: const Icon(Icons.palette),
                   ))
             ],
           ),
         ));
+  }
+
+  void showColors(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Select color"),
+        content: ColorPickerCard(onChange: (Color? color) {
+          setState(() {
+            if (color != null) {
+              backgroundColor = color;
+            }
+          });
+          // Handle main color changes
+        }),
+      ),
+    );
   }
 }
