@@ -13,7 +13,18 @@ class LabelRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(LabelModel label) {}
+  void remove(LabelModel label) {
+    labels.removeWhere((item) => item.id == label.id);
+    notifyListeners();
+  }
 
-  void edit(LabelModel label) {}
+  void edit(LabelModel label, String newLabel) {
+    for (var i = 0; i < labels.length; i++) {
+      if (labels[i].id == label.id) {
+        labels[i].title = newLabel;
+      }
+    }
+  }
+
+  notifyListeners();
 }

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tasks_list/model/label_model.dart';
+import 'package:tasks_list/repository/label_repository.dart';
 
 class LabelCard extends StatefulWidget {
   final LabelModel label;
-  const LabelCard({super.key, required this.label});
+
+  LabelCard({
+    super.key,
+    required this.label,
+  });
 
   @override
   State<LabelCard> createState() => _LabelCardState();
@@ -14,8 +20,12 @@ class _LabelCardState extends State<LabelCard> {
 
   bool editing = false;
 
+  late LabelRepository listLabels;
+
   @override
   Widget build(BuildContext context) {
+    listLabels = Provider.of<LabelRepository>(context, listen: false);
+
     return Container(
         constraints: const BoxConstraints(minHeight: 75),
         decoration: BoxDecoration(
@@ -50,7 +60,7 @@ class _LabelCardState extends State<LabelCard> {
                         Icons.edit,
                       )),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () => remove(),
                       icon: Icon(
                         Icons.delete,
                         color: Theme.of(context).colorScheme.errorContainer,
@@ -81,6 +91,14 @@ class _LabelCardState extends State<LabelCard> {
   }
 
   void saveLabel() {
+    listLabels.edit(widget.label, labelControler.text);
+
+    editingSetState();
+  }
+
+  void remove() {
+    listLabels.remove(widget.label);
+
     editingSetState();
   }
 }

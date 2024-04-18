@@ -1,5 +1,10 @@
+import 'package:uuid/uuid.dart';
+
 class LabelModel {
+  String id;
   String title;
 
-  LabelModel({required this.title});
+  static Uuid uuid = const Uuid();
+
+  LabelModel({required this.title}) : id = uuid.v4();
 }

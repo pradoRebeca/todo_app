@@ -13,8 +13,6 @@ class LabelScreen extends StatefulWidget {
 }
 
 class _LabelScreenState extends State<LabelScreen> {
-  late LabelRepository listLabels;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -31,7 +29,7 @@ class _LabelScreenState extends State<LabelScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: LabelCard(
-                      label: LabelModel(title: labels.list[index].title),
+                      label: labels.list[index],
                     ),
                   );
                 },
@@ -59,9 +57,8 @@ class _LabelScreenState extends State<LabelScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        actions: [TextButton(onPressed: () {}, child: const Text("Save"))],
-        title: const Text("Create new label"),
-        content: const AddLabelCard(),
+        // title: const Text("Create new label"),
+        content: AddLabelCard(),
       ),
     );
   }
