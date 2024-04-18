@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class EmptyData extends StatefulWidget {
-  const EmptyData({Key? key}) : super(key: key);
+class EmptyDataCard extends StatefulWidget {
+  final IconData icon;
+  final String message;
+  const EmptyDataCard({super.key, required this.icon, required this.message});
 
   @override
-  _EmptyDataState createState() => _EmptyDataState();
+  createState() => _EmptyDataCardState();
 }
 
-class _EmptyDataState extends State<EmptyData> {
+class _EmptyDataCardState extends State<EmptyDataCard> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -15,14 +17,14 @@ class _EmptyDataState extends State<EmptyData> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.lightbulb_outline,
+            widget.icon,
             size: 50,
             color: Theme.of(context).colorScheme.outline,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Text(
-              "Notes you add appear here",
+              widget.message,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           )

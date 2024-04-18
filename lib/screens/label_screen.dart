@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/components/add_label_card.dart';
-import 'package:tasks_list/components/empty_data.dart';
+import 'package:tasks_list/components/empty_data_card.dart';
 import 'package:tasks_list/components/label_card.dart';
 import 'package:tasks_list/repository/label_repository.dart';
 
@@ -37,7 +37,8 @@ class _LabelScreenState extends State<LabelScreen> {
               );
             }
 
-            return const EmptyData();
+            return const EmptyDataCard(
+                icon: Icons.label, message: "Your labels appear here");
           },
         ),
         Positioned(

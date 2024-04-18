@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_list/components/empty_data_card.dart';
 import 'package:tasks_list/components/note_card.dart';
-import 'package:tasks_list/model/label_model.dart';
-import 'package:tasks_list/model/note_model.dart';
+import 'package:tasks_list/repository/note_repository.dart';
 
 class ArchiveScreen extends StatelessWidget {
   const ArchiveScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => NoteCard(
-        note: NoteModel(
-            title: 'teste',
-            content: 'testeeeeeeeee',
-            color: Colors.green,
-            labels: [
-              LabelModel(title: 'text'),
-              LabelModel(title: 'text'),
-              LabelModel(title: 'text'),
-            ]),
-      ),
-      itemCount: 3,
-    );
+    return Consumer<NoteRepository>(builder: (context, notes, child) {
+      if (notes.listArchived.isNotEmpty) {
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return NoteCard(
+              note: notes.listArchived[index],
+            );
+          },
+          itemCount: notes.listArchived.length,
+        );
+      }
+
+      return const EmptyDataCard(
+          icon: Icons.label, message: "Your archived notes appear here");
+    });
   }
 }

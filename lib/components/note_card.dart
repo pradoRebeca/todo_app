@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tasks_list/model/note_model.dart';
+import 'package:tasks_list/repository/note_repository.dart';
 
 class NoteCard extends StatefulWidget {
   final NoteModel note;
@@ -10,8 +12,12 @@ class NoteCard extends StatefulWidget {
 }
 
 class _NoteCardState extends State<NoteCard> {
+  late NoteRepository notes;
+
   @override
   Widget build(BuildContext context) {
+    notes = Provider.of<NoteRepository>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
       child: Container(
@@ -52,10 +58,25 @@ class _NoteCardState extends State<NoteCard> {
                   ],
                 ),
               ),
-            if (widget.note.deleted)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (!widget.note.archived && !widget.note.deleted)
+                  IconButton(
+                      onPressed: () => archived(),
+                      tooltip: "Archive",
+                      icon: const Icon(Icons.archive_outlined)),
+                if (widget.note.archived && !widget.note.deleted)
+                  IconButton(
+                      onPressed: () {},
+                      tooltip: "Unachive",
+                      icon: const Icon(Icons.unarchive_outlined)),
+                if (!widget.note.deleted)
+                  IconButton(
+                      onPressed: () => moveToTrash(),
+                      tooltip: "Move to trash",
+                      icon: const Icon(Icons.delete_outline)),
+                if (widget.note.deleted) ...[
                   IconButton(
                       onPressed: () {},
                       tooltip: "Delete forever",
@@ -66,11 +87,20 @@ class _NoteCardState extends State<NoteCard> {
                       icon: const Icon(
                         Icons.restore_from_trash,
                       ))
-                ],
-              )
+                ]
+              ],
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void moveToTrash() {
+    notes.moveToTrash(widget.note);
+  }
+
+  void archived() {
+    notes.moveToArchived(widget.note);
   }
 }

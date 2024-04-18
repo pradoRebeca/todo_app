@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:tasks_list/components/color_picker_card.dart';
 import 'package:tasks_list/components/checkbox_label_card.dart';
+import 'package:tasks_list/model/note_model.dart';
+import 'package:tasks_list/repository/note_repository.dart';
 
 class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key});
@@ -14,10 +17,14 @@ class _EditNoteScreen extends State<EditNoteScreen> {
   TextEditingController title = TextEditingController();
   TextEditingController content = TextEditingController();
 
+  late NoteRepository listNote;
+
   Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
+    listNote = Provider.of<NoteRepository>(context, listen: false);
+
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
@@ -26,7 +33,7 @@ class _EditNoteScreen extends State<EditNoteScreen> {
           backgroundColor: Colors.transparent,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => onSave(),
               icon: const Icon(Icons.done),
               tooltip: 'Save',
             )
@@ -102,6 +109,15 @@ class _EditNoteScreen extends State<EditNoteScreen> {
             ],
           ),
         ));
+  }
+
+  void onSave() {
+    NoteModel note = NoteModel(
+        content: content.text, title: title.text, color: backgroundColor);
+
+    listNote.add(note);
+
+    Navigator.pop(context);
   }
 
   void showColors(BuildContext context) {

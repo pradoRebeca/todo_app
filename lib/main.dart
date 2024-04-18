@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/repository/label_repository.dart';
+import 'package:tasks_list/repository/note_repository.dart';
 import 'package:tasks_list/screens/home_screen.dart';
 
 void main() {
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (context) => LabelRepository())],
+    providers: [
+      ChangeNotifierProvider(create: (context) => LabelRepository()),
+      ChangeNotifierProvider(
+        create: (context) => NoteRepository(),
+      )
+    ],
     child: const MyApp(),
   ));
 }
