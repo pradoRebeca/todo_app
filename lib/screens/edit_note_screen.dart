@@ -109,14 +109,16 @@ class _EditNoteScreen extends State<EditNoteScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Select color"),
-        content: ColorPickerCard(onChange: (Color? color) {
-          setState(() {
-            if (color != null) {
-              backgroundColor = color;
-            }
-          });
-          // Handle main color changes
-        }),
+        content: ColorPickerCard(
+          onChange: (Color? color) {
+            setState(() {
+              if (color != null) {
+                backgroundColor = color;
+              }
+            });
+            // Handle main color changes
+          },
+        ),
       ),
     );
   }

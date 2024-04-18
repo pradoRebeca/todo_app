@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_list/components/add_label_card.dart';
 import 'package:tasks_list/components/label_card.dart';
 import 'package:tasks_list/model/label_model.dart';
 
@@ -33,10 +34,21 @@ class _LabelScreenState extends State<LabelScreen> {
             bottom: 16.0,
             right: 16.0,
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () => showAddLabel(context),
               child: const Icon(Icons.add),
             ))
       ],
+    );
+  }
+
+  void showAddLabel(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        actions: [TextButton(onPressed: () {}, child: const Text("Save"))],
+        title: const Text("Create new label"),
+        content: const AddLabelCard(),
+      ),
     );
   }
 }
