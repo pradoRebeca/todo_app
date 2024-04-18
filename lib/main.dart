@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_list/repository/label_repository.dart';
 import 'package:tasks_list/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [ChangeNotifierProvider(create: (context) => LabelRepository())],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

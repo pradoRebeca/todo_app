@@ -30,6 +30,10 @@ class _CheckboxLabelCardState extends State<CheckboxLabelCard> {
           index,
         ) =>
             CheckboxListTile(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+          selectedTileColor: Colors.red[100],
           title: Text("${stateCheckbox[index]['title']} e $index"),
           value: stateCheckbox[index]['state'],
           onChanged: (value) {
