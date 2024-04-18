@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tasks_list/components/color_picker_card.dart';
-import 'package:tasks_list/components/list_label_card.dart';
+import 'package:tasks_list/components/checkbox_label_card.dart';
 
 class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key});
@@ -80,6 +80,8 @@ class _EditNoteScreen extends State<EditNoteScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: FloatingActionButton(
+                          heroTag: 'label',
+                          tooltip: 'label',
                           onPressed: () {
                             showListLabelCard(context);
                             // showColors(context);
@@ -88,6 +90,8 @@ class _EditNoteScreen extends State<EditNoteScreen> {
                         ),
                       ),
                       FloatingActionButton(
+                        tooltip: 'pallete',
+                        heroTag: 'pallete',
                         onPressed: () {
                           showColors(context);
                         },
@@ -123,7 +127,7 @@ class _EditNoteScreen extends State<EditNoteScreen> {
       builder: (context) => const AlertDialog(
         scrollable: true,
         title: Text("Select labels"),
-        content: ListLabelCard(),
+        content: CheckboxLabelCard(),
       ),
     );
   }
