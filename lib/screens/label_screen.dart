@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/components/add_label_card.dart';
+import 'package:tasks_list/components/empty_data.dart';
 import 'package:tasks_list/components/label_card.dart';
-import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/repository/label_repository.dart';
 
 class LabelScreen extends StatefulWidget {
@@ -37,9 +37,7 @@ class _LabelScreenState extends State<LabelScreen> {
               );
             }
 
-            return const Center(
-              child: Text("tem nada aqui"),
-            );
+            return const EmptyData();
           },
         ),
         Positioned(
@@ -56,8 +54,7 @@ class _LabelScreenState extends State<LabelScreen> {
   void showAddLabel(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        // title: const Text("Create new label"),
+      builder: (context) => const AlertDialog(
         content: AddLabelCard(),
       ),
     );

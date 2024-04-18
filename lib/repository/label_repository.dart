@@ -19,6 +19,10 @@ class LabelRepository extends ChangeNotifier {
   }
 
   void edit(LabelModel label, String newLabel) {
+    if (newLabel.isEmpty) {
+      return;
+    }
+
     for (var i = 0; i < labels.length; i++) {
       if (labels[i].id == label.id) {
         labels[i].title = newLabel;

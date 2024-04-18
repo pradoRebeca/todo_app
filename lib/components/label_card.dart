@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/repository/label_repository.dart';
+import 'package:tasks_list/utils/show_alert_dialog.dart';
 
 class LabelCard extends StatefulWidget {
   final LabelModel label;
@@ -60,7 +61,12 @@ class _LabelCardState extends State<LabelCard> {
                         Icons.edit,
                       )),
                   IconButton(
-                      onPressed: () => remove(),
+                      onPressed: () => showAlertDialog(
+                          context: context,
+                          onConfirm: remove,
+                          title: "Remove ${widget.label.title}?",
+                          content:
+                              "This action will removed the label from the note, do you really want to do this?"),
                       icon: Icon(
                         Icons.delete,
                         color: Theme.of(context).colorScheme.errorContainer,
@@ -91,8 +97,12 @@ class _LabelCardState extends State<LabelCard> {
   }
 
   void saveLabel() {
-    listLabels.edit(widget.label, labelControler.text);
+    if (labelControler.text.isEmpty) {
+      editingSetState();
+      return;
+    }
 
+    listLabels.edit(widget.label, labelControler.text);
     editingSetState();
   }
 
@@ -100,5 +110,9 @@ class _LabelCardState extends State<LabelCard> {
     listLabels.remove(widget.label);
 
     editingSetState();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('${widget.label.title} was removed')),
+    );
   }
 }
