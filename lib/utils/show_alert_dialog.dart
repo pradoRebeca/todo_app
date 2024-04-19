@@ -8,7 +8,10 @@ Future showAlertDialog(
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(title),
+      title: Text(
+        title,
+        overflow: TextOverflow.ellipsis,
+      ),
       content: Text(content),
       actions: [
         TextButton(

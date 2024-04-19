@@ -5,14 +5,14 @@ import 'package:tasks_list/model/note_model.dart';
 class NoteRepository extends ChangeNotifier {
   List<NoteModel> notes = [];
 
-  UnmodifiableListView<NoteModel> get list =>
-      UnmodifiableListView(notes.where((item) => item.deleted == false));
+  UnmodifiableListView<NoteModel> get list => UnmodifiableListView(
+      notes.where((item) => item.deleted == false && item.archived == false));
 
   UnmodifiableListView<NoteModel> get listDeleted =>
       UnmodifiableListView(notes.where((item) => item.deleted == true));
 
-  UnmodifiableListView<NoteModel> get listArchived =>
-      UnmodifiableListView(notes.where((item) => item.archived == true));
+  UnmodifiableListView<NoteModel> get listArchived => UnmodifiableListView(
+      notes.where((item) => item.archived == true && item.deleted == false));
 
   void add(NoteModel note) {
     notes.add(note);
@@ -30,13 +30,13 @@ class NoteRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(NoteModel note) {
+  void removePermanently(NoteModel note) {
     notes.removeWhere((item) => item.id == note.id);
 
     notifyListeners();
   }
 
-  void moveToTrash(NoteModel note) {
+  void changeDeleteStatus(NoteModel note) {
     for (var i = 0; i < notes.length; i++) {
       if (notes[i].id == note.id) {
         notes[i].deleted = !notes[i].deleted;
@@ -46,7 +46,7 @@ class NoteRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  void moveToArchived(NoteModel note) {
+  void changeArchiveStatus(NoteModel note) {
     for (var i = 0; i < notes.length; i++) {
       if (notes[i].id == note.id) {
         notes[i].archived = !notes[i].archived;

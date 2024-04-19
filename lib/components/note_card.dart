@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/model/note_model.dart';
 import 'package:tasks_list/repository/note_repository.dart';
+import 'package:tasks_list/utils/show_alert_dialog.dart';
 
 class NoteCard extends StatefulWidget {
   final NoteModel note;
@@ -63,26 +64,31 @@ class _NoteCardState extends State<NoteCard> {
               children: [
                 if (!widget.note.archived && !widget.note.deleted)
                   IconButton(
-                      onPressed: () => archived(),
+                      onPressed: () => notes.changeArchiveStatus(widget.note),
                       tooltip: "Archive",
                       icon: const Icon(Icons.archive_outlined)),
                 if (widget.note.archived && !widget.note.deleted)
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () => notes.changeArchiveStatus(widget.note),
                       tooltip: "Unachive",
                       icon: const Icon(Icons.unarchive_outlined)),
                 if (!widget.note.deleted)
                   IconButton(
-                      onPressed: () => moveToTrash(),
+                      onPressed: () => notes.changeDeleteStatus(widget.note),
                       tooltip: "Move to trash",
                       icon: const Icon(Icons.delete_outline)),
                 if (widget.note.deleted) ...[
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () => showAlertDialog(
+                          context: context,
+                          onConfirm: () => notes.removePermanently(widget.note),
+                          title: "Remove ${widget.note.title}?",
+                          content:
+                              "This action will removed the label from the note, do you really want to do this?"),
                       tooltip: "Delete forever",
                       icon: const Icon(Icons.delete_forever)),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () => notes.changeDeleteStatus(widget.note),
                       tooltip: "Restore archive",
                       icon: const Icon(
                         Icons.restore_from_trash,
@@ -94,13 +100,5 @@ class _NoteCardState extends State<NoteCard> {
         ),
       ),
     );
-  }
-
-  void moveToTrash() {
-    notes.moveToTrash(widget.note);
-  }
-
-  void archived() {
-    notes.moveToArchived(widget.note);
   }
 }
