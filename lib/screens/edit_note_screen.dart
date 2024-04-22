@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/components/color_picker_card.dart';
@@ -10,20 +11,36 @@ import 'package:tasks_list/repository/labels_note_repository.dart';
 import 'package:tasks_list/repository/note_repository.dart';
 
 class EditNoteScreen extends StatefulWidget {
-  const EditNoteScreen({super.key});
+  final NoteModel? note;
+  final bool editing;
+  const EditNoteScreen({super.key, this.note, this.editing = false});
 
   @override
   State<EditNoteScreen> createState() => _EditNoteScreen();
 }
 
 class _EditNoteScreen extends State<EditNoteScreen> {
-  TextEditingController title = TextEditingController();
-  TextEditingController content = TextEditingController();
+  Color? backgroundColor;
 
+  late TextEditingController title;
+  late TextEditingController content;
   late NoteRepository listNote;
   late LabelsNoteRepository labelsNoteRepository;
 
-  Color? backgroundColor;
+  @override
+  void initState() {
+    super.initState();
+
+    content = TextEditingController(text: widget.note?.title ?? "");
+    title = TextEditingController(text: widget.note?.title ?? "");
+    backgroundColor = widget.note?.color;
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (widget.editing && widget.note!.labels.isNotEmpty) {
+        labelsNoteRepository.addAll(widget.note!.labels);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +54,9 @@ class _EditNoteScreen extends State<EditNoteScreen> {
           systemOverlayStyle:
               const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
           backgroundColor: Colors.transparent,
+          leading: BackButton(
+            onPressed: () => popScreen(),
+          ),
           actions: [
             IconButton(
               tooltip: 'Show Labels',
@@ -74,7 +94,6 @@ class _EditNoteScreen extends State<EditNoteScreen> {
                           bool? isFocused}) {
                         return null;
                       },
-                      minLines: null,
                       maxLines: null,
                       controller: title,
                       keyboardType: TextInputType.multiline,
@@ -119,16 +138,29 @@ class _EditNoteScreen extends State<EditNoteScreen> {
   void onSave() {
     List<LabelModel> labels = List.from(labelsNoteRepository.list);
 
-    NoteModel note = NoteModel(
-        content: content.text,
-        title: title.text,
-        color: backgroundColor,
-        labels: labels);
+    if (widget.editing) {
+      widget.note!.color = backgroundColor;
+      widget.note!.content = content.text;
+      widget.note!.labels = labels;
+      widget.note!.title = title.text;
 
-    listNote.add(note);
+      listNote.edit(widget.note!);
+    }
 
+    if (!widget.editing) {
+      NoteModel note = NoteModel(
+          content: content.text,
+          title: title.text,
+          color: backgroundColor,
+          labels: labels);
+      listNote.add(note);
+    }
+
+    popScreen();
+  }
+
+  void popScreen() {
     labelsNoteRepository.clear();
-
     Navigator.pop(context);
   }
 

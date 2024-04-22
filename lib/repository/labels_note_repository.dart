@@ -22,6 +22,12 @@ class LabelsNoteRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addAll(List<LabelModel> label) {
+    labelsNote.addAll(label);
+
+    notifyListeners();
+  }
+
   void clear() {
     labelsNote.clear();
   }

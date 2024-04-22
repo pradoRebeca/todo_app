@@ -110,10 +110,10 @@ class _LabelCardState extends State<LabelCard> {
   }
 
   void remove() {
+    editingSetState();
+
     listLabels.remove(widget.label);
     noteRepository.removeLabelNote(widget.label);
-
-    editingSetState();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${widget.label.title} was removed')),
