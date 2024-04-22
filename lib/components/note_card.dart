@@ -43,13 +43,13 @@ class _NoteCardState extends State<NoteCard> {
                 ),
               ),
             Text(widget.note.content),
-            if (widget.note.labels != null && widget.note.labels!.isNotEmpty)
+            if (widget.note.labels.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Wrap(
                   spacing: 5.0,
                   children: [
-                    ...widget.note.labels!.map((label) => LabelChip(
+                    ...widget.note.labels.map((label) => LabelChip(
                           text: label.title,
                           color: widget.note.color,
                         ))

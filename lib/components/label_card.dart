@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/repository/label_repository.dart';
+import 'package:tasks_list/repository/note_repository.dart';
 import 'package:tasks_list/utils/show_alert_dialog.dart';
 
 class LabelCard extends StatefulWidget {
@@ -22,10 +23,12 @@ class _LabelCardState extends State<LabelCard> {
   bool editing = false;
 
   late LabelRepository listLabels;
+  late NoteRepository noteRepository;
 
   @override
   Widget build(BuildContext context) {
     listLabels = Provider.of<LabelRepository>(context, listen: false);
+    noteRepository = Provider.of<NoteRepository>(context, listen: false);
 
     return Container(
         constraints: const BoxConstraints(minHeight: 75),
@@ -108,6 +111,7 @@ class _LabelCardState extends State<LabelCard> {
 
   void remove() {
     listLabels.remove(widget.label);
+    noteRepository.removeLabelNote(widget.label);
 
     editingSetState();
 

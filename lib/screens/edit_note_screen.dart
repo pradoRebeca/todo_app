@@ -117,13 +117,17 @@ class _EditNoteScreen extends State<EditNoteScreen> {
   }
 
   void onSave() {
+    List<LabelModel> labels = List.from(labelsNoteRepository.list);
+
     NoteModel note = NoteModel(
         content: content.text,
         title: title.text,
         color: backgroundColor,
-        labels: labelsNoteRepository.list);
+        labels: labels);
 
     listNote.add(note);
+
+    labelsNoteRepository.clear();
 
     Navigator.pop(context);
   }

@@ -7,11 +7,11 @@ class NoteModel {
   String? title;
   String content;
   Color? color;
-  DateTime? createdAt;
+  DateTime createdAt = DateTime.now();
   DateTime? updateAt;
   bool deleted;
   bool archived;
-  List<LabelModel>? labels;
+  List<LabelModel> labels;
 
   static Uuid uuid = const Uuid();
 
@@ -19,7 +19,7 @@ class NoteModel {
       {this.title,
       required this.content,
       this.color,
-      this.labels,
+      required this.labels,
       this.deleted = false,
       this.archived = false})
       : id = uuid.v4();

@@ -19,11 +19,9 @@ class _NoteScreenState extends State<NoteScreen> {
       Consumer<NoteRepository>(builder: (context, notes, child) {
         if (notes.list.isNotEmpty) {
           return ListView.builder(
-            itemBuilder: (context, index) {
-              return NoteCard(
-                note: notes.list[index],
-              );
-            },
+            itemBuilder: (context, index) => NoteCard(
+              note: notes.list[index],
+            ),
             itemCount: notes.list.length,
           );
         }

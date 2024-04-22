@@ -21,4 +21,8 @@ class LabelsNoteRepository extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void clear() {
+    labelsNote.clear();
+  }
 }

@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/model/note_model.dart';
 
 class NoteRepository extends ChangeNotifier {
@@ -24,6 +25,16 @@ class NoteRepository extends ChangeNotifier {
     for (var i = 0; i < notes.length; i++) {
       if (notes[i].id == note.id) {
         notes[i] = note;
+      }
+    }
+
+    notifyListeners();
+  }
+
+  void removeLabelNote(LabelModel label) {
+    for (var i = 0; i < notes.length; i++) {
+      if (notes[i].labels.isNotEmpty) {
+        notes[i].labels.removeWhere((item) => item.id == label.id);
       }
     }
 
