@@ -7,7 +7,7 @@ import 'package:tasks_list/utils/show_alert_dialog.dart';
 class LabelCard extends StatefulWidget {
   final LabelModel label;
 
-  LabelCard({
+  const LabelCard({
     super.key,
     required this.label,
   });

@@ -30,5 +30,6 @@ class LabelRepository extends ChangeNotifier {
     }
   }
 
+  @override
   notifyListeners();
 }

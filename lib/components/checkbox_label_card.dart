@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_list/model/label_model.dart';
+import 'package:tasks_list/repository/label_repository.dart';
+import 'package:tasks_list/repository/labels_note_repository.dart';
 
 class CheckboxLabelCard extends StatefulWidget {
   const CheckboxLabelCard({super.key});
@@ -8,56 +12,38 @@ class CheckboxLabelCard extends StatefulWidget {
 }
 
 class _CheckboxLabelCardState extends State<CheckboxLabelCard> {
-  bool labelChecked = false;
-
-  List<Map<String, dynamic>> stateCheckbox = [
-    {'state': false, 'title': 'text'},
-    {'state': false, 'title': 'text'},
-    {'state': false, 'title': 'text'},
-    {'state': false, 'title': 'text'},
-    {'state': false, 'title': 'text'},
-    {'state': false, 'title': 'text'},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 300,
       width: 300,
-      child: ListView.builder(
-        itemBuilder: (
-          context,
-          index,
-        ) =>
-            CheckboxListTile(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
-          selectedTileColor: Colors.red[100],
-          title: Text("${stateCheckbox[index]['title']} e $index"),
-          value: stateCheckbox[index]['state'],
-          onChanged: (value) {
-            setState(() => checkboxSetState(
-                  index,
-                ));
+      child: Consumer2<LabelRepository, LabelsNoteRepository>(
+        builder: (context, labels, labelNote, child) => ListView.builder(
+          itemBuilder: (
+            context,
+            index,
+          ) {
+            LabelModel label = labels.list[index];
+            return CheckboxListTile(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              selectedTileColor: Colors.red[100],
+              title: Text(label.title),
+              value: labelNote.list.contains(label),
+              onChanged: (value) => addOrRemoveLabel(label),
+            );
           },
+          itemCount: labels.list.length,
         ),
-        itemCount: stateCheckbox.length,
       ),
     );
   }
 
-  void checkboxSetState(int index) {
-    Map<String, dynamic> dataCheckbox = stateCheckbox[index];
+  void addOrRemoveLabel(LabelModel label) {
+    LabelsNoteRepository labelsNoteRepository =
+        Provider.of<LabelsNoteRepository>(context, listen: false);
 
-    if (dataCheckbox.isNotEmpty) {
-      setState(() {
-        dataCheckbox['state'] = !dataCheckbox['state'];
-      });
-    }
-  }
-
-  void findSelectedCheckbox() {
-    stateCheckbox.firstWhere((item) => item['state'] == true);
+    labelsNoteRepository.addOrRemove(label);
   }
 }

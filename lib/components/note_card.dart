@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tasks_list/components/label_chip.dart';
 import 'package:tasks_list/model/note_model.dart';
 import 'package:tasks_list/repository/note_repository.dart';
 import 'package:tasks_list/utils/show_alert_dialog.dart';
@@ -48,14 +49,10 @@ class _NoteCardState extends State<NoteCard> {
                 child: Wrap(
                   spacing: 5.0,
                   children: [
-                    ...widget.note.labels!.map((label) => Chip(
-                        label: Text(label.title),
-                        backgroundColor: widget.note.color ??
-                            Theme.of(context).colorScheme.surfaceContainerHigh,
-                        side: widget.note.color != null
-                            ? BorderSide(
-                                color: Theme.of(context).colorScheme.outline)
-                            : BorderSide.none))
+                    ...widget.note.labels!.map((label) => LabelChip(
+                          text: label.title,
+                          color: widget.note.color,
+                        ))
                   ],
                 ),
               ),

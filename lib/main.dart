@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/repository/label_repository.dart';
+import 'package:tasks_list/repository/labels_note_repository.dart';
 import 'package:tasks_list/repository/note_repository.dart';
 import 'package:tasks_list/screens/home_screen.dart';
 
@@ -10,7 +11,8 @@ void main() {
       ChangeNotifierProvider(create: (context) => LabelRepository()),
       ChangeNotifierProvider(
         create: (context) => NoteRepository(),
-      )
+      ),
+      ChangeNotifierProvider(create: (context) => LabelsNoteRepository())
     ],
     child: const MyApp(),
   ));

@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/components/color_picker_card.dart';
 import 'package:tasks_list/components/checkbox_label_card.dart';
+import 'package:tasks_list/components/label_chip.dart';
+import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/model/note_model.dart';
+import 'package:tasks_list/repository/labels_note_repository.dart';
 import 'package:tasks_list/repository/note_repository.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -18,12 +21,15 @@ class _EditNoteScreen extends State<EditNoteScreen> {
   TextEditingController content = TextEditingController();
 
   late NoteRepository listNote;
+  late LabelsNoteRepository labelsNoteRepository;
 
   Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     listNote = Provider.of<NoteRepository>(context, listen: false);
+    labelsNoteRepository =
+        Provider.of<LabelsNoteRepository>(context, listen: false);
 
     return Scaffold(
         backgroundColor: backgroundColor,
@@ -32,6 +38,18 @@ class _EditNoteScreen extends State<EditNoteScreen> {
               const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
           backgroundColor: Colors.transparent,
           actions: [
+            IconButton(
+              tooltip: 'Show Labels',
+              onPressed: () => showListLabelCard(context),
+              icon: const Icon(Icons.label),
+            ),
+            IconButton(
+              tooltip: 'Show pallete',
+              icon: const Icon(Icons.palette),
+              onPressed: () {
+                showColors(context);
+              },
+            ),
             IconButton(
               onPressed: () => onSave(),
               icon: const Icon(Icons.done),
@@ -81,31 +99,18 @@ class _EditNoteScreen extends State<EditNoteScreen> {
               Positioned(
                   bottom: 16,
                   right: 0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: FloatingActionButton(
-                          heroTag: 'label',
-                          tooltip: 'label',
-                          onPressed: () {
-                            showListLabelCard(context);
-                            // showColors(context);
-                          },
-                          child: const Icon(Icons.label),
-                        ),
-                      ),
-                      FloatingActionButton(
-                        tooltip: 'pallete',
-                        heroTag: 'pallete',
-                        onPressed: () {
-                          showColors(context);
-                        },
-                        child: const Icon(Icons.palette),
-                      )
-                    ],
-                  ))
+                  child: Consumer<LabelsNoteRepository>(
+                    builder: (context, labelsNote, child) => Wrap(
+                      spacing: 5.0,
+                      children: [
+                        ...labelsNote.list.map((label) => LabelChip(
+                              text: label.title,
+                              color: backgroundColor,
+                              onDelete: () => onDeleteChip(label),
+                            ))
+                      ],
+                    ),
+                  )),
             ],
           ),
         ));
@@ -113,11 +118,19 @@ class _EditNoteScreen extends State<EditNoteScreen> {
 
   void onSave() {
     NoteModel note = NoteModel(
-        content: content.text, title: title.text, color: backgroundColor);
+        content: content.text,
+        title: title.text,
+        color: backgroundColor,
+        labels: labelsNoteRepository.list);
 
     listNote.add(note);
 
     Navigator.pop(context);
+  }
+
+  void onDeleteChip(LabelModel label) async {
+    await Future.delayed(const Duration(milliseconds: 600));
+    labelsNoteRepository.addOrRemove(label);
   }
 
   void showColors(BuildContext context) {
