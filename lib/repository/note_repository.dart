@@ -16,7 +16,7 @@ class NoteRepository extends ChangeNotifier {
       notes.where((item) => item.archived == true && item.deleted == false));
 
   void add(NoteModel note) {
-    notes.add(note);
+    notes.insert(0, note);
 
     notifyListeners();
   }

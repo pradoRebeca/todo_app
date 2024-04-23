@@ -9,7 +9,7 @@ class LabelRepository extends ChangeNotifier {
   UnmodifiableListView<LabelModel> get list => UnmodifiableListView(labels);
 
   void add(LabelModel label) {
-    labels.add(label);
+    labels.insert(0, label);
     notifyListeners();
   }
 
