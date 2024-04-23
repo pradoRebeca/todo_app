@@ -4,8 +4,9 @@ import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/repository/label_repository.dart';
 
 class AddLabelCard extends StatefulWidget {
-  final bool? layoutInCheckbox;
-  const AddLabelCard({super.key, this.layoutInCheckbox});
+  const AddLabelCard({
+    super.key,
+  });
 
   @override
   State<AddLabelCard> createState() => _AddLabelCardState();
@@ -18,43 +19,20 @@ class _AddLabelCardState extends State<AddLabelCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.blue,
-      // constraints: const BoxConstraints(
-      //   minHeight: 100,
-      // ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Form(
-            child: TextFormField(
-                controller: label,
-                decoration: InputDecoration(
-                    hintText: 'Maths - Sr. Brown',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    // border: In,
-                    prefixIcon:
-                        IconButton(onPressed: () {}, icon: Icon(Icons.close)),
-                    suffixIcon: IconButton(
-                        onPressed: () => onSave(), icon: Icon(Icons.done)))),
-          ),
-          if (widget.layoutInCheckbox != null)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary),
-                    )),
-                TextButton(onPressed: () => onSave(), child: const Text("Save"))
-              ],
-            )
-        ],
-      ),
+    return Form(
+      child: TextFormField(
+          controller: label,
+          onChanged: (value) => setState(() {}),
+          decoration: InputDecoration(
+              hintText: 'Enter label name',
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                onPressed: label.text.isNotEmpty ? () => onSave() : null,
+                icon: const Icon(
+                  Icons.add,
+                ),
+                color: Theme.of(context).colorScheme.primary,
+              ))),
     );
   }
 
@@ -63,11 +41,9 @@ class _AddLabelCardState extends State<AddLabelCard> {
       listLabels = Provider.of<LabelRepository>(context, listen: false);
       listLabels.add(LabelModel(title: label.text));
 
-      Navigator.pop(context);
+      setState(() => label.clear());
 
       return;
     }
-
-    Navigator.pop(context);
   }
 }

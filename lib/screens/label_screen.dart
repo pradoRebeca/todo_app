@@ -15,48 +15,46 @@ class LabelScreen extends StatefulWidget {
 class _LabelScreenState extends State<LabelScreen> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Consumer<LabelRepository>(
-          builder: (context, labels, child) {
-            if (labels.list.isNotEmpty) {
-              return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemBuilder: (
-                  context,
-                  index,
-                ) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: LabelCard(
-                      label: labels.list[index],
-                    ),
-                  );
-                },
-                itemCount: labels.list.length,
-              );
-            }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Theme.of(context).colorScheme.surfaceContainer),
+              child: const AddLabelCard(),
+            ),
+          ),
+          // const Divider(),
+          Expanded(child: Consumer<LabelRepository>(
+            builder: (context, labels, child) {
+              if (labels.list.isNotEmpty) {
+                return ListView.builder(
+                  itemBuilder: (
+                    context,
+                    index,
+                  ) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: LabelCard(
+                        label: labels.list[index],
+                      ),
+                    );
+                  },
+                  itemCount: labels.list.length,
+                );
+              }
 
-            return const EmptyDataCard(
-                icon: Icons.label, message: "Your labels appear here");
-          },
-        ),
-        Positioned(
-            bottom: 16.0,
-            right: 16.0,
-            child: FloatingActionButton(
-              onPressed: () => showAddLabel(context),
-              child: const Icon(Icons.add),
-            ))
-      ],
-    );
-  }
-
-  void showAddLabel(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const AlertDialog(
-        content: AddLabelCard(),
+              return const EmptyDataCard(
+                  icon: Icons.label, message: "Your labels appear here");
+            },
+          )),
+        ],
       ),
     );
   }

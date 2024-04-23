@@ -31,7 +31,7 @@ class _LabelCardState extends State<LabelCard> {
     noteRepository = Provider.of<NoteRepository>(context, listen: false);
 
     return Container(
-        constraints: const BoxConstraints(minHeight: 75),
+        constraints: const BoxConstraints(minHeight: 60),
         decoration: BoxDecoration(
             border: editing
                 ? Border.all(color: Theme.of(context).colorScheme.outline)
@@ -110,8 +110,6 @@ class _LabelCardState extends State<LabelCard> {
   }
 
   void remove() {
-    editingSetState();
-
     listLabels.remove(widget.label);
     noteRepository.removeLabelNote(widget.label);
 

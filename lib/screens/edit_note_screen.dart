@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:tasks_list/components/add_label_card.dart';
 import 'package:tasks_list/components/color_picker_card.dart';
 import 'package:tasks_list/components/checkbox_label_card.dart';
 import 'package:tasks_list/components/label_chip.dart';
@@ -182,7 +184,6 @@ class _EditNoteScreen extends State<EditNoteScreen> {
             setState(() {
               if (color != null) {
                 backgroundColor = color;
-                print("backgorund $color");
               }
             });
             // Handle main color changes
@@ -195,11 +196,18 @@ class _EditNoteScreen extends State<EditNoteScreen> {
   void showListLabelCard(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => const AlertDialog(
-        contentPadding: EdgeInsets.zero,
+      builder: (context) => AlertDialog(
         scrollable: true,
-        title: Text("Select labels"),
-        content: CheckboxLabelCard(),
+        title: const Text("Label note"),
+        content: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: const AddLabelCard(),
+            ),
+            const CheckboxLabelCard(),
+          ],
+        ),
       ),
     );
   }
