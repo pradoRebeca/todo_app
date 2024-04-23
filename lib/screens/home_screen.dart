@@ -59,10 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             )),
-            const SizedBox(
-              height: 100,
-              child: ThemeModeCard(),
-            ),
+            // const SizedBox(
+            //   height: 100,
+            //   child: ,
+            // ),
+            ThemeModeCard()
           ],
         ),
       ),
