@@ -23,4 +23,16 @@ class NoteModel {
       this.deleted = false,
       this.archived = false})
       : id = uuid.v4();
+
+  String getCreatedAt() {
+    int day = createdAt.day; // Obtém o dia
+    int month = createdAt.month; // Obtém o mês
+    int year = createdAt.year;
+
+    return "${verifyIntLength(day)}-${verifyIntLength(month)}-$year";
+  }
+
+  String verifyIntLength(int number) {
+    return "${number.toString().length < 2 ? '0$number' : number}";
+  }
 }

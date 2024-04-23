@@ -36,7 +36,7 @@ class _NoteCardState extends State<NoteCard> {
               borderRadius: BorderRadius.circular(15)),
           child: Container(
             constraints: const BoxConstraints(minHeight: 100),
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.fromLTRB(14, 14, 14, 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -63,8 +63,17 @@ class _NoteCardState extends State<NoteCard> {
                     ),
                   ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Expanded(
+                        child: Text(
+                      widget.note.getCreatedAt(),
+                      style: Theme.of(context).textTheme.bodySmall?.merge(
+                          TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant)),
+                    )),
                     if (!widget.note.archived && !widget.note.deleted)
                       IconButton(
                           onPressed: () =>
