@@ -29,8 +29,8 @@ class _NoteCardState extends State<NoteCard> {
                 EditNoteScreen(note: widget.note, editing: true))),
         child: Ink(
           decoration: BoxDecoration(
-              color: widget.note.color ?? Theme.of(context).colorScheme.surface,
-              border: widget.note.color == null
+              color: widget.note.color,
+              border: widget.note.color == Colors.transparent
                   ? Border.all(color: Theme.of(context).colorScheme.outline)
                   : null,
               borderRadius: BorderRadius.circular(15)),

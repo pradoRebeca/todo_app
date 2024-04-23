@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tasks_list/repository/label_repository.dart';
 import 'package:tasks_list/repository/labels_note_repository.dart';
 import 'package:tasks_list/repository/note_repository.dart';
+import 'package:tasks_list/repository/theme_mode__repository.dart';
 import 'package:tasks_list/screens/home_screen.dart';
 
 void main() {
@@ -12,7 +13,10 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => NoteRepository(),
       ),
-      ChangeNotifierProvider(create: (context) => LabelsNoteRepository())
+      ChangeNotifierProvider(create: (context) => LabelsNoteRepository()),
+      ChangeNotifierProvider(
+        create: (context) => ThemeModeRepository(),
+      )
     ],
     child: const MyApp(),
   ));
@@ -20,18 +24,19 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
+    return Consumer<ThemeModeRepository>(
+      builder: (context, value, child) => MaterialApp(
+        title: 'Keep',
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        darkTheme: ThemeData.dark(useMaterial3: true),
+        themeMode:
+            Provider.of<ThemeModeRepository>(context, listen: false).themeMode,
+        home: const HomeScreen(),
       ),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: ThemeMode.dark,
-      home: const HomeScreen(),
     );
   }
 }

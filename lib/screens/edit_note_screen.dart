@@ -20,8 +20,7 @@ class EditNoteScreen extends StatefulWidget {
 }
 
 class _EditNoteScreen extends State<EditNoteScreen> {
-  Color? backgroundColor;
-
+  late Color backgroundColor;
   late TextEditingController title;
   late TextEditingController content;
   late NoteRepository listNote;
@@ -33,7 +32,7 @@ class _EditNoteScreen extends State<EditNoteScreen> {
 
     content = TextEditingController(text: widget.note?.title ?? "");
     title = TextEditingController(text: widget.note?.title ?? "");
-    backgroundColor = widget.note?.color;
+    backgroundColor = widget.note?.color ?? Colors.transparent;
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (widget.editing && widget.note!.labels.isNotEmpty) {
@@ -49,11 +48,10 @@ class _EditNoteScreen extends State<EditNoteScreen> {
         Provider.of<LabelsNoteRepository>(context, listen: false);
 
     return Scaffold(
-        backgroundColor: backgroundColor,
         appBar: AppBar(
           systemOverlayStyle:
               const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-          backgroundColor: Colors.transparent,
+          backgroundColor: backgroundColor,
           leading: BackButton(
             onPressed: () => popScreen(),
           ),
@@ -77,60 +75,64 @@ class _EditNoteScreen extends State<EditNoteScreen> {
             )
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-          child: Stack(
-            children: [
-              Form(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    constraints: const BoxConstraints(minHeight: 30),
-                    child: TextFormField(
-                      buildCounter: (BuildContext context,
-                          {int? currentLength,
-                          int? maxLength,
-                          bool? isFocused}) {
-                        return null;
-                      },
-                      maxLines: null,
-                      controller: title,
-                      keyboardType: TextInputType.multiline,
-                      // expands: true,
-                      style: Theme.of(context).textTheme.titleLarge,
-                      decoration: const InputDecoration(
-                          hintText: 'Title', border: InputBorder.none),
+        body: Container(
+          color: backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Stack(
+              children: [
+                Form(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: const BoxConstraints(minHeight: 30),
+                      child: TextFormField(
+                        buildCounter: (BuildContext context,
+                            {int? currentLength,
+                            int? maxLength,
+                            bool? isFocused}) {
+                          return null;
+                        },
+                        maxLines: null,
+                        controller: title,
+                        keyboardType: TextInputType.multiline,
+                        // expands: true,
+                        style: Theme.of(context).textTheme.titleLarge,
+                        decoration: const InputDecoration(
+                            hintText: 'Title', border: InputBorder.none),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: content,
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration(
-                          hintText: 'Take a note...', border: InputBorder.none),
-                      expands: true,
-                    ),
-                  )
-                ],
-              )),
-              Positioned(
-                  bottom: 16,
-                  right: 0,
-                  child: Consumer<LabelsNoteRepository>(
-                    builder: (context, labelsNote, child) => Wrap(
-                      spacing: 5.0,
-                      children: [
-                        ...labelsNote.list.map((label) => LabelChip(
-                              text: label.title,
-                              color: backgroundColor,
-                              onDelete: () => onDeleteChip(label),
-                            ))
-                      ],
-                    ),
-                  )),
-            ],
+                    Expanded(
+                      child: TextFormField(
+                        controller: content,
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                            hintText: 'Take a note...',
+                            border: InputBorder.none),
+                        expands: true,
+                      ),
+                    )
+                  ],
+                )),
+                Positioned(
+                    bottom: 16,
+                    right: 0,
+                    child: Consumer<LabelsNoteRepository>(
+                      builder: (context, labelsNote, child) => Wrap(
+                        spacing: 5.0,
+                        children: [
+                          ...labelsNote.list.map((label) => LabelChip(
+                                text: label.title,
+                                color: backgroundColor,
+                                onDelete: () => onDeleteChip(label),
+                              ))
+                        ],
+                      ),
+                    )),
+              ],
+            ),
           ),
         ));
   }
@@ -175,10 +177,12 @@ class _EditNoteScreen extends State<EditNoteScreen> {
       builder: (context) => AlertDialog(
         title: const Text("Select color"),
         content: ColorPickerCard(
+          colorSelected: backgroundColor,
           onChange: (Color? color) {
             setState(() {
               if (color != null) {
                 backgroundColor = color;
+                print("backgorund $color");
               }
             });
             // Handle main color changes
@@ -192,6 +196,7 @@ class _EditNoteScreen extends State<EditNoteScreen> {
     showDialog(
       context: context,
       builder: (context) => const AlertDialog(
+        contentPadding: EdgeInsets.zero,
         scrollable: true,
         title: Text("Select labels"),
         content: CheckboxLabelCard(),

@@ -4,7 +4,8 @@ import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/repository/label_repository.dart';
 
 class AddLabelCard extends StatefulWidget {
-  const AddLabelCard({super.key});
+  final bool? layoutInCheckbox;
+  const AddLabelCard({super.key, this.layoutInCheckbox});
 
   @override
   State<AddLabelCard> createState() => _AddLabelCardState();
@@ -18,30 +19,40 @@ class _AddLabelCardState extends State<AddLabelCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 100, maxHeight: 150),
+      // color: Colors.blue,
+      // constraints: const BoxConstraints(
+      //   minHeight: 100,
+      // ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Form(
             child: TextFormField(
                 controller: label,
-                decoration: const InputDecoration(
-                  hintText: 'Maths - Sr. Brown',
-                )),
+                decoration: InputDecoration(
+                    hintText: 'Maths - Sr. Brown',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    // border: In,
+                    prefixIcon:
+                        IconButton(onPressed: () {}, icon: Icon(Icons.close)),
+                    suffixIcon: IconButton(
+                        onPressed: () => onSave(), icon: Icon(Icons.done)))),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                  )),
-              TextButton(onPressed: () => onSave(), child: const Text("Save"))
-            ],
-          )
+          if (widget.layoutInCheckbox != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary),
+                    )),
+                TextButton(onPressed: () => onSave(), child: const Text("Save"))
+              ],
+            )
         ],
       ),
     );

@@ -6,7 +6,7 @@ class NoteModel {
   String id;
   String? title;
   String content;
-  Color? color;
+  Color color;
   DateTime createdAt = DateTime.now();
   DateTime? updateAt;
   bool deleted;
@@ -18,7 +18,7 @@ class NoteModel {
   NoteModel(
       {this.title,
       required this.content,
-      this.color,
+      required this.color,
       required this.labels,
       this.deleted = false,
       this.archived = false})

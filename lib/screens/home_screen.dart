@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_list/components/theme_mode_card.dart';
 import 'package:tasks_list/screens/label_screen.dart';
 import 'package:tasks_list/screens/archive_screen.dart';
 import 'package:tasks_list/screens/note_screen.dart';
@@ -43,15 +44,27 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(screens[currentScreenIndex]['title']),
       ),
-      drawer: NavigationDrawer(
-        selectedIndex: currentScreenIndex,
-        onDestinationSelected: handleScreenChanged,
-        children: screens
-            .map(
-              (item) => NavigationDrawerDestination(
-                  icon: Icon(item['icon']), label: Text(item['title'])),
-            )
-            .toList(),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            // DrawerHeader(child: Text("sdd")),
+            Expanded(
+                child: NavigationDrawer(
+              selectedIndex: currentScreenIndex,
+              onDestinationSelected: handleScreenChanged,
+              children: [
+                ...screens.map(
+                  (item) => NavigationDrawerDestination(
+                      icon: Icon(item['icon']), label: Text(item['title'])),
+                ),
+              ],
+            )),
+            const SizedBox(
+              height: 100,
+              child: ThemeModeCard(),
+            ),
+          ],
+        ),
       ),
       body: screens[currentScreenIndex]['destination'],
     );
