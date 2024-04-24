@@ -24,6 +24,8 @@ class _NoteCardState extends State<NoteCard> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
       child: InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 EditNoteScreen(note: widget.note, editing: true))),

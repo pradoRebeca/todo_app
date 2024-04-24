@@ -22,6 +22,7 @@ class _LabelChipState extends State<LabelChip> {
 
     return widget.onDelete != null
         ? InputChip(
+            color: WidgetStateProperty.all(widget.color),
             onDeleted: () => widget.onDelete!(),
             label: Text(widget.text),
             backgroundColor: colorTheme,

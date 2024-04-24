@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:tasks_list/components/add_label_card.dart';
-import 'package:tasks_list/components/color_picker_card.dart';
-import 'package:tasks_list/components/checkbox_label_card.dart';
 import 'package:tasks_list/components/label_chip.dart';
 import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/model/note_model.dart';
 import 'package:tasks_list/repository/labels_note_repository.dart';
 import 'package:tasks_list/repository/note_repository.dart';
+import 'package:tasks_list/utils/show_alert_dialog.dart';
+import 'package:tasks_list/utils/show_color_picker.dart';
+import 'package:tasks_list/utils/show_label_note.dart';
 
 class EditNoteScreen extends StatefulWidget {
   final NoteModel? note;
@@ -55,20 +54,19 @@ class _EditNoteScreen extends State<EditNoteScreen> {
               const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
           backgroundColor: backgroundColor,
           leading: BackButton(
-            onPressed: () => popScreen(),
+            onPressed: () => onBack(),
           ),
           actions: [
             IconButton(
               tooltip: 'Show Labels',
-              onPressed: () => showListLabelCard(context),
+              onPressed: () => showLabelNote(context),
               icon: const Icon(Icons.label),
             ),
             IconButton(
               tooltip: 'Show pallete',
               icon: const Icon(Icons.palette),
-              onPressed: () {
-                showColors(context);
-              },
+              onPressed: () => showColorPicker(
+                  context, backgroundColor, changeBackgroundColor),
             ),
             IconButton(
               onPressed: () => onSave(),
@@ -146,33 +144,62 @@ class _EditNoteScreen extends State<EditNoteScreen> {
         ));
   }
 
-  void onSave() {
-    List<LabelModel> labels = List.from(labelsNoteRepository.list);
-
-    if (widget.editing) {
-      widget.note!.color = backgroundColor;
-      widget.note!.content = content.text;
-      widget.note!.labels = labels;
-      widget.note!.title = title.text;
-
-      listNote.edit(widget.note!);
+  void onBack() {
+    if (content.text.isEmpty) {
+      showAlertDialog(
+          content: "When exiting, changes will not be saved.",
+          context: context,
+          onConfirm: popScreen);
+      return;
     }
 
-    if (!widget.editing) {
-      NoteModel note = NoteModel(
-          content: content.text,
-          title: title.text,
-          color: backgroundColor,
-          labels: labels);
-      listNote.add(note);
-    }
-
-    popScreen();
+    popScreen;
   }
 
-  void popScreen() {
-    labelsNoteRepository.clear();
-    Navigator.pop(context);
+  bool validateNote() {
+    if (content.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No content!')),
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  void editNote(List<LabelModel> labels) {
+    widget.note!.color = backgroundColor;
+    widget.note!.content = content.text;
+    widget.note!.labels = labels;
+    widget.note!.title = title.text;
+
+    listNote.edit(widget.note!);
+  }
+
+  void createNote(List<LabelModel> labels) {
+    NoteModel note = NoteModel(
+        content: content.text,
+        title: title.text,
+        color: backgroundColor,
+        labels: labels);
+    listNote.add(note);
+  }
+
+  void onSave() {
+    List<LabelModel> labels = List.from(labelsNoteRepository.list);
+    bool validate = validateNote();
+
+    if (!validate) {
+      return;
+    }
+
+    if (widget.editing) {
+      editNote(labels);
+      return;
+    }
+
+    createNote(labels);
+    popScreen();
   }
 
   void onDeleteChip(LabelModel label) async {
@@ -180,42 +207,17 @@ class _EditNoteScreen extends State<EditNoteScreen> {
     labelsNoteRepository.addOrRemove(label);
   }
 
-  void showColors(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Select color"),
-        content: ColorPickerCard(
-          colorSelected: backgroundColor,
-          onChange: (Color? color) {
-            setState(() {
-              if (color != null) {
-                backgroundColor = color;
-              }
-            });
-            // Handle main color changes
-          },
-        ),
-      ),
-    );
+  void changeBackgroundColor(Color? color) {
+    setState(() {
+      if (color != null) {
+        backgroundColor = color;
+      }
+    });
+    // Handle main color changes
   }
 
-  void showListLabelCard(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        scrollable: true,
-        title: const Text("Label note"),
-        content: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: const AddLabelCard(),
-            ),
-            const CheckboxLabelCard(),
-          ],
-        ),
-      ),
-    );
+  void popScreen() {
+    labelsNoteRepository.clear();
+    Navigator.pop(context);
   }
 }

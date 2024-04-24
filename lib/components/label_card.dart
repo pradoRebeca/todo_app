@@ -59,11 +59,15 @@ class _LabelCardState extends State<LabelCard> {
               children: [
                 if (!editing) ...[
                   IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onPressed: () => editingSetState(),
                       icon: const Icon(
                         Icons.edit,
                       )),
                   IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onPressed: () => showAlertDialog(
                           context: context,
                           onConfirm: remove,
@@ -77,11 +81,15 @@ class _LabelCardState extends State<LabelCard> {
                 ],
                 if (editing) ...[
                   IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onPressed: () => saveLabel(),
                       icon: const Icon(
                         Icons.done,
                       )),
                   IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onPressed: () => editingSetState(),
                       icon: const Icon(
                         Icons.close,

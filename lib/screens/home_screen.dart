@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Drawer(
         child: Column(
           children: [
-            // DrawerHeader(child: Text("sdd")),
             Expanded(
                 child: NavigationDrawer(
               selectedIndex: currentScreenIndex,
@@ -59,11 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             )),
-            // const SizedBox(
-            //   height: 100,
-            //   child: ,
-            // ),
-            ThemeModeCard()
+            const ThemeModeCard()
           ],
         ),
       ),
