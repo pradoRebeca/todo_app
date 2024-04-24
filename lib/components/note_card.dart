@@ -41,8 +41,9 @@ class _NoteCardState extends State<NoteCard> {
             padding: const EdgeInsets.fromLTRB(14, 14, 14, 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (widget.note.title != null)
+                if (widget.note.title != null && widget.note.title!.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text(
@@ -50,7 +51,12 @@ class _NoteCardState extends State<NoteCard> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
-                Text(widget.note.content),
+                Text(
+                  widget.note.content,
+                  style: widget.note.title == null || widget.note.title!.isEmpty
+                      ? Theme.of(context).textTheme.titleMedium
+                      : null,
+                ),
                 if (widget.note.labels.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
