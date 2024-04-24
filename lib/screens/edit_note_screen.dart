@@ -31,7 +31,7 @@ class _EditNoteScreen extends State<EditNoteScreen> {
   void initState() {
     super.initState();
 
-    content = TextEditingController(text: widget.note?.title ?? "");
+    content = TextEditingController(text: widget.note?.content ?? "");
     title = TextEditingController(text: widget.note?.title ?? "");
     backgroundColor = widget.note?.color ?? Colors.transparent;
 

@@ -5,9 +5,8 @@ import 'package:tasks_list/repository/label_repository.dart';
 import 'package:tasks_list/repository/labels_note_repository.dart';
 
 class AddLabelCard extends StatefulWidget {
-  const AddLabelCard({
-    super.key,
-  });
+  bool? labelCheckboxSelected;
+  AddLabelCard({super.key, this.labelCheckboxSelected});
 
   @override
   State<AddLabelCard> createState() => _AddLabelCardState();
@@ -41,13 +40,17 @@ class _AddLabelCardState extends State<AddLabelCard> {
   void onSave() {
     if (label.text.isNotEmpty) {
       labelRepository = Provider.of<LabelRepository>(context, listen: false);
-      labelsNoteRepository =
-          Provider.of<LabelsNoteRepository>(context, listen: false);
 
       LabelModel newLabel = LabelModel(title: label.text);
 
       labelRepository.add(newLabel);
-      labelsNoteRepository.addOrRemove(newLabel);
+
+      if (widget.labelCheckboxSelected != null &&
+          widget.labelCheckboxSelected == true) {
+        labelsNoteRepository =
+            Provider.of<LabelsNoteRepository>(context, listen: false);
+        labelsNoteRepository.addOrRemove(newLabel);
+      }
 
       setState(() => label.clear());
 

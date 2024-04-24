@@ -27,7 +27,7 @@ class _LabelScreenState extends State<LabelScreen> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Theme.of(context).colorScheme.surfaceContainer),
-              child: const AddLabelCard(),
+              child: AddLabelCard(),
             ),
           ),
           // const Divider(),

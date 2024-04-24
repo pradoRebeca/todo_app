@@ -12,7 +12,9 @@ Future showLabelNote(BuildContext context) {
         children: [
           Container(
             padding: const EdgeInsets.only(bottom: 15),
-            child: const AddLabelCard(),
+            child: AddLabelCard(
+              labelCheckboxSelected: true,
+            ),
           ),
           const CheckboxLabelCard(),
         ],
