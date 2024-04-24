@@ -78,24 +78,32 @@ class _NoteCardState extends State<NoteCard> {
                     )),
                     if (!widget.note.archived && !widget.note.deleted)
                       IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onPressed: () =>
                               notes.changeArchiveStatus(widget.note),
                           tooltip: "Archive",
                           icon: const Icon(Icons.archive_outlined)),
                     if (widget.note.archived && !widget.note.deleted)
                       IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onPressed: () =>
                               notes.changeArchiveStatus(widget.note),
                           tooltip: "Unachive",
                           icon: const Icon(Icons.unarchive_outlined)),
                     if (!widget.note.deleted)
                       IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onPressed: () =>
                               notes.changeDeleteStatus(widget.note),
                           tooltip: "Move to trash",
                           icon: const Icon(Icons.delete_outline)),
                     if (widget.note.deleted) ...[
                       IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onPressed: () => showAlertDialog(
                               context: context,
                               onConfirm: () =>
@@ -106,6 +114,8 @@ class _NoteCardState extends State<NoteCard> {
                           tooltip: "Delete forever",
                           icon: const Icon(Icons.delete_forever)),
                       IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onPressed: () =>
                               notes.changeDeleteStatus(widget.note),
                           tooltip: "Restore archive",
