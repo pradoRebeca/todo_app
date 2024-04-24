@@ -144,27 +144,25 @@ class _EditNoteScreen extends State<EditNoteScreen> {
         ));
   }
 
-  void onBack() {
+  bool validateNote() {
     if (content.text.isEmpty) {
+      return false;
+    }
+
+    return true;
+  }
+
+  void onBack() {
+    bool validate = validateNote();
+
+    if (validate) {
       showAlertDialog(
           content: "When exiting, changes will not be saved.",
           context: context,
           onConfirm: popScreen);
       return;
     }
-
-    popScreen;
-  }
-
-  bool validateNote() {
-    if (content.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No content!')),
-      );
-      return false;
-    }
-
-    return true;
+    popScreen();
   }
 
   void editNote(List<LabelModel> labels) {
@@ -190,15 +188,20 @@ class _EditNoteScreen extends State<EditNoteScreen> {
     bool validate = validateNote();
 
     if (!validate) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No content!')),
+      );
       return;
     }
 
     if (widget.editing) {
       editNote(labels);
-      return;
     }
 
-    createNote(labels);
+    if (!widget.editing) {
+      createNote(labels);
+    }
+
     popScreen();
   }
 
