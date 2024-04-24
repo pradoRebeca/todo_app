@@ -69,7 +69,7 @@ class _LabelCardState extends State<LabelCard> {
                           onConfirm: remove,
                           title: "Remove ${widget.label.title}?",
                           content:
-                              "This action will removed the label from the note, do you really want to do this?"),
+                              "This label will be removed from notes that are."),
                       icon: Icon(
                         Icons.delete,
                         color: Theme.of(context).colorScheme.errorContainer,

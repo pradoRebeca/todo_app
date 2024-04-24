@@ -79,11 +79,11 @@ class _EditNoteScreen extends State<EditNoteScreen> {
         ),
         body: Container(
           color: backgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Stack(
-              children: [
-                Form(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: Form(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -118,23 +118,30 @@ class _EditNoteScreen extends State<EditNoteScreen> {
                     )
                   ],
                 )),
-                Positioned(
-                    bottom: 16,
-                    right: 0,
-                    child: Consumer<LabelsNoteRepository>(
-                      builder: (context, labelsNote, child) => Wrap(
-                        spacing: 5.0,
-                        children: [
-                          ...labelsNote.list.map((label) => LabelChip(
-                                text: label.title,
-                                color: backgroundColor,
-                                onDelete: () => onDeleteChip(label),
-                              ))
-                        ],
+              ),
+              Positioned(
+                bottom: 10,
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  height: 40,
+                  child: Consumer<LabelsNoteRepository>(
+                    builder: (context, labelsNote, child) => ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => Padding(
+                        padding: EdgeInsets.only(
+                            right: 8.0, left: index == 0 ? 16 : 0),
+                        child: LabelChip(
+                          text: labelsNote.list[index].title,
+                          color: backgroundColor,
+                          onDelete: () => onDeleteChip(labelsNote.list[index]),
+                        ),
                       ),
-                    )),
-              ],
-            ),
+                      itemCount: labelsNote.list.length,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ));
   }

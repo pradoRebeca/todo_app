@@ -6,17 +6,15 @@ import 'package:tasks_list/repository/note_repository.dart';
 import 'package:tasks_list/repository/theme_mode__repository.dart';
 import 'package:tasks_list/screens/home_screen.dart';
 
+//pradoRebeca - GitHub
+
 void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => LabelRepository()),
-      ChangeNotifierProvider(
-        create: (context) => NoteRepository(),
-      ),
+      ChangeNotifierProvider(create: (context) => NoteRepository()),
       ChangeNotifierProvider(create: (context) => LabelsNoteRepository()),
-      ChangeNotifierProvider(
-        create: (context) => ThemeModeRepository(),
-      )
+      ChangeNotifierProvider(create: (context) => ThemeModeRepository())
     ],
     child: const MyApp(),
   ));
