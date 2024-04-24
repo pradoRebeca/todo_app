@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks_list/model/label_model.dart';
 import 'package:tasks_list/repository/label_repository.dart';
+import 'package:tasks_list/repository/labels_note_repository.dart';
 
 class AddLabelCard extends StatefulWidget {
   const AddLabelCard({
@@ -15,7 +16,8 @@ class AddLabelCard extends StatefulWidget {
 class _AddLabelCardState extends State<AddLabelCard> {
   TextEditingController label = TextEditingController();
 
-  late LabelRepository listLabels;
+  late LabelRepository labelRepository;
+  late LabelsNoteRepository labelsNoteRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +40,14 @@ class _AddLabelCardState extends State<AddLabelCard> {
 
   void onSave() {
     if (label.text.isNotEmpty) {
-      listLabels = Provider.of<LabelRepository>(context, listen: false);
-      listLabels.add(LabelModel(title: label.text));
+      labelRepository = Provider.of<LabelRepository>(context, listen: false);
+      labelsNoteRepository =
+          Provider.of<LabelsNoteRepository>(context, listen: false);
+
+      LabelModel newLabel = LabelModel(title: label.text);
+
+      labelRepository.add(newLabel);
+      labelsNoteRepository.addOrRemove(newLabel);
 
       setState(() => label.clear());
 
