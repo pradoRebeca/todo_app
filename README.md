@@ -1,11 +1,13 @@
 
+# TodoAPP
+Projeto realizado para aprofundar os estudos sobre gerenciamento de estados com Provider. 
+É inspirado no [Google Keep](https://keep.google.com), um serviço gratuito para criação de notas.
+
+
 ## 🔨 Funcionalidades do projeto
-No App o usuário pode criar, deletar e arquivar lembretes, também é possível personalizar a cor do lembrete e adicionar marcadores. Todo armazenamento é mantido em memória do App, portanto, ao finalizar o App as informações são perdidas.
+No App o usuário pode criar, deletar e arquivar notas, também é possível personalizar a cor da nota e adicionar marcadores. Todo armazenamento é mantido em memória do App, portanto, ao finalizar o App as informações são perdidas.
 
-
-## 🎯 Objetivo
-O App é o resultado dos estudos sobre gerenciamento de estados com Provider
-
+<img src="/lib/asset/todo_project.gif" height="700" />
 
 ## 🛠️ Abrir e rodar o projeto
 
